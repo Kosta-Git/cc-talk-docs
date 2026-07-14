@@ -1,0 +1,28 @@
+[workspace]
+resolver = "3"
+members = ["api","common","database-seeder"]
+authors = ["Kosta S."]
+
+[workspace.package]
+edition = "2024"
+minimum-version = "1.95"
+
+[workspace.lints.clippy]
+pedantic    = { level = "warn", priority = -1 }
+nursery     = { level = "warn", priority = -1 }
+unwrap_used = "deny"
+
+[workspace.dependencies]
+common = { path = "common", version = "0.1.0" }
+
+thiserror = "2.0.18"
+anyhow = "1.0.103"
+serde = { version = "1.0", features = ["derive"] }
+rusqlite = { version = "0.40.1", features = ["bundled"] }
+sqlite-vec = "0.1.9"
+
+fastembed = "5.17.3"
+pdfium-render = "0.9.3"
+regex = "1.13.0"
+text-splitter = { version = "0.32.0", features = ["tokenizers"] }
+tokenizers = { version = "0.23.1", default-features = false, features = ["onig"] }

@@ -1,0 +1,9 @@
+target/
+.git/
+database.db
+database.db-shm
+database.db-wal
+Dockerfile
+.dockerignore
+# .fastembed_cache is intentionally NOT ignored: if present locally it is
+# copied into the build so the seeder skips the ~130MB model download.

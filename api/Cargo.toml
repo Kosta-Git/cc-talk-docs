@@ -1,0 +1,30 @@
+[package]
+name = "api"
+version = "0.1.0"
+edition.workspace = true
+
+[dependencies]
+common.workspace = true
+thiserror.workspace = true
+anyhow.workspace = true
+fastembed.workspace = true
+rusqlite.workspace = true
+serde.workspace = true
+pdfium-render.workspace = true
+
+axum = "0.8.9"
+tokio = { version = "1.52.3", features = ["full"] }
+tower = { version = "0.5.3", features = ["util", "timeout"] }
+tower-http = { version = "0.7.0", features = ["add-extension", "trace", "cors"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+rmcp = { version = "2.2.0", features = [
+    "server",
+    "macros",
+    "schemars",
+    "transport-io",
+    "transport-streamable-http-server",
+] }
+
+[lints]
+workspace = true

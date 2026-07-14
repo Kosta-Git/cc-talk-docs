@@ -1,0 +1,82 @@
+opencollection: 1.0.0
+info:
+  name: ccTalk docs
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ''
+      port: ''
+      auth:
+        username: ''
+        password: ''
+      bypassProxy: ''
+items:
+  - info:
+      name: health
+      type: http
+      seq: 1
+    http:
+      method: GET
+      url: '{{protocol}}://{{host}}/health'
+      auth: inherit
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+  - info:
+      name: cc-talk-docs
+      type: http
+      seq: 2
+    http:
+      method: GET
+      url: '{{protocol}}://{{host}}/cc-talk-docs?query=request hopper status command'
+      params:
+        - name: query
+          value: request hopper status command
+          type: query
+      auth: inherit
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+  - info:
+      name: cc-talk-docs pages
+      type: http
+      seq: 3
+    http:
+      method: GET
+      url: '{{protocol}}://{{host}}/cc-talk-docs/pages?document=cctalk-part-2-v4-7&page_start=58&count=1'
+      params:
+        - name: document
+          value: cctalk-part-2-v4-7
+          type: query
+        - name: page_start
+          value: '58'
+          type: query
+        - name: count
+          value: '1'
+          type: query
+      auth: inherit
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+request:
+  variables:
+    - name: protocol
+      value: http
+    - name: host
+      value: 127.0.0.1:8080
+bundled: true
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git
+    exportedAt: '2026-07-15T09:33:48.349Z'
+    exportedUsing: Bruno

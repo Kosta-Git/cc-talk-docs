@@ -1,0 +1,6 @@
+/target
+.DS_Store
+.fastembed_cache/**
+
+*.db-wal
+*.db-shm
