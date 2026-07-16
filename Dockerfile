@@ -1,9 +1,24 @@
 # ---- Build stage: compile binaries and seed the database ----
 # trixie is required: ort's prebuilt static onnxruntime needs glibc >= 2.38.
 FROM rust:1-trixie AS builder
+# Populated automatically by buildx (e.g. "amd64", "arm64").
+ARG TARGETARCH
 WORKDIR /app
 
 COPY . .
+
+# The repo bundles an x86-64 ./shared/libpdfium.so. For arm64 builds, replace
+# it with the matching prebuilt library so the seeder (below) and the runtime
+# can bind to pdfium. amd64 keeps the committed library.
+RUN set -eux; \
+    if [ "$TARGETARCH" = "arm64" ]; then \
+        curl -fsSL -o /tmp/pdfium.tgz \
+            "https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F7947/pdfium-linux-arm64.tgz"; \
+        tar -xzf /tmp/pdfium.tgz -C /tmp lib/libpdfium.so; \
+        cp /tmp/lib/libpdfium.so ./shared/libpdfium.so; \
+        rm -rf /tmp/pdfium.tgz /tmp/lib; \
+    fi
+
 RUN cargo build --release -p api -p database-seeder
 
 # Seed database.db from the PDF docs. Requires ./shared (pdfium + tokenizer);
